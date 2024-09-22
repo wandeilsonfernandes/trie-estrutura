@@ -20,18 +20,27 @@ class Trie:
             node = node.children[char]
         node.is_end_of_word = True
 
-    def search(self, word):
-        node = self.root
-        for char in word:
-            if char not in node.children:
-                return False
-            node = node.children[char]
-        return node.is_end_of_word
+    def load_dictionary(self, words):
+        for word in words:
+            self.insert(word)
 
-    def starts_with(self, prefix):
+    def autocomplete(self, prefix, limit=10):
+        results = []
+        node = self._find_node(prefix)
+        if node:
+            self._find_words(node, prefix, results)
+        return results[:limit]  # Limitar a quantidade de sugestões
+
+    def _find_node(self, prefix):
         node = self.root
         for char in prefix:
             if char not in node.children:
-                return False
+                return None
             node = node.children[char]
-        return True
+        return node
+
+    def _find_words(self, node, prefix, results):
+        if node.is_end_of_word:
+            results.append(prefix)
+        for char, child_node in node.children.items():
+            self._find_words(child_node, prefix + char, results)
