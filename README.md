@@ -20,7 +20,7 @@ Siga os passos abaixo para configurar e executar o projeto:
 
 ### 1️⃣ Clone o repositório
 ```bash
-git clone https://github.com/seurepositorio/projeto-trie.git
+git clone https://github.com/wandeilsonfernandes/trie-estrutura.git
 cd projeto-trie
 ```
 
